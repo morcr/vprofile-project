@@ -17,7 +17,7 @@ pipeline {
     NEXUS_LOGIN = "nexuslogin"
   }
   stages {
-    stage("test") {
+    stage("Build") {
       steps {
         sh "mvn -s settings.xml -DskipTests install"
       }
@@ -26,6 +26,12 @@ pipeline {
           echo "Now archiving."
           archiveArtifacts artifacts: '**/*.war'
         }
+      }
+    }
+
+    stage('Test') {
+      steps {
+        sh 'mvn -s settings.xml test'
       }
     }
     
